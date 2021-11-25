@@ -1,0 +1,380 @@
+* export options                                                   :noexport:
+** general
+   #+STARTUP: beamer
+   #+OPTIONS: H:1 toc:nil num:t date:nil
+
+   #+LaTeX_CLASS: beamer
+   #+LaTeX_CLASS_OPTIONS: [presentation,mathserif,table]
+
+** presentation info
+   #+TITLE: ML Part 2 tutorial
+   # #+AUTHOR: Jérôme Dockès
+
+   #+BEAMER_HEADER: \author{Jérôme Dockès \& Nikhil Bhagwat}
+   #+BEAMER_HEADER: \titlegraphic{\includegraphics[height=1.5cm]{figures/mcgill-university.png} \hspace{1.5cm} \includegraphics[height=1.5cm]{figures/origami-lab-logo.png}}
+   #+BEAMER_HEADER: \date{QLS course 2021-07-30}
+   #+BEAMER_HEADER: \subtitle{Dimensionality reduction \& cross-validation}
+
+** latex headers
+*** fonts and beamer
+    #+LaTeX_HEADER: \beamertemplatenavigationsymbolsempty
+
+    #+LaTeX_HEADER: \usepackage[T1]{fontenc}
+
+    #+LaTeX_HEADER: \usepackage{DejaVuSans}
+    #+LaTeX_HEADER: \usepackage{DejaVuSansMono}
+
+    # #+LaTeX_HEADER: \usepackage[default]{opensans}
+    # #+LaTeX_HEADER: \usepackage{lmodern}
+    # #+LaTeX_HEADER: \usepackage{libertine}
+    # #+LaTeX_HEADER: \usepackage{iwona}
+    # #+LaTeX_HEADER: \usepackage[sc,osf]{mathpazo}
+    # #+LaTeX_HEADER: \usepackage{mathptmx}
+    # #+LaTeX_HEADER: \usepackage{helvet}
+    # #+LaTeX_HEADER: \usefonttheme{default}
+
+    # #+LaTeX_HEADER: \usefonttheme{serif}
+    #+LaTeX_HEADER: \usefonttheme{professionalfonts}
+
+    #+LaTeX_HEADER: \usepackage[euler-digits,euler-hat-accent]{eulervm}
+
+    # #+LaTeX_HEADER: \setbeamertemplate{itemize items}[circle]
+    #+LaTeX_HEADER: \setbeamertemplate{itemize items}{•}
+    #+LaTeX_HEADER: \setbeamertemplate{enumerate items}[default]
+
+    # #+LaTex_HEADER: \AtBeginSection[]
+    # #+LaTex_HEADER: {
+    # #+LaTex_HEADER: \begin{frame}<beamer>
+    # #+LaTex_HEADER: \frametitle{Outline}
+    # #+LaTex_HEADER: \tableofcontents[currentsection]
+    # #+LaTex_HEADER: \end{frame}
+    # #+LaTex_HEADER: }
+    # #+LaTex_HEADER: \setcounter{tocdepth}{1}
+
+    #+LaTeX_HEADER: \setbeamertemplate{headline}{}
+    #+LaTeX_HEADER: \setbeamertemplate{footline}{
+    #+LaTeX_HEADER: \leavevmode%
+    #+LaTeX_HEADER: \hbox{%
+    #+LaTeX_HEADER: \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{fg=black}%
+    #+LaTeX_HEADER:     \usebeamerfont{section in head/foot}\insertsection\hspace*{2em}
+    #+LaTeX_HEADER:     \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    #+LaTeX_HEADER: \end{beamercolorbox}%
+    #+LaTeX_HEADER: }%
+    #+LaTeX_HEADER: \vskip0pt%
+    #+LaTeX_HEADER: }
+    #+LaTeX_HEADER: \usepackage{appendixnumberbeamer}
+
+    #+LaTeX_HEADER: \setbeamersize{text margin left=3mm,text margin right=3mm}
+
+*** footnote citations
+    #+LaTeX_HEADER: \newcommand\blfootnote[1]{%
+    #+LaTeX_HEADER: \begingroup
+    #+LaTeX_HEADER: \renewcommand\thefootnote{}\footnote{#1}%
+    #+LaTeX_HEADER: \addtocounter{footnote}{-1}%
+    #+LaTeX_HEADER:  \endgroup
+    #+LaTeX_HEADER: }
+    #+LaTeX_HEADER: \setbeamerfont{footnote}{size=\tiny}
+*** other imports
+    #+LaTeX_HEADER: \usepackage{tikz}
+    #+LaTeX_HEADER: \usepackage[retainorgcmds]{IEEEtrantools}
+    #+LaTeX_HEADER: \hypersetup{colorlinks=true, allcolors=., urlcolor=blue}
+    #+LaTeX_HEADER: \usepackage[absolute,overlay]{textpos}
+*** math operators
+    #+LaTex_HEADER: \newcommand{\eg}{e.g.\,}
+    #+LaTex_HEADER: \newcommand{\ie}{i.e.\,}
+    #+LaTex_HEADER: \newcommand{\aka}{a.k.a.\,}
+    #+LaTex_HEADER: \newcommand{\etc}{\emph{etc.}\,}
+
+    #+LaTex_HEADER: \newcommand{\X}{{\mathbold X}}
+    #+LaTex_HEADER: \newcommand{\bS}{{\mathbold S}}
+    #+LaTex_HEADER: \newcommand{\bSigma}{{\mathbold \Sigma}}
+    #+LaTex_HEADER: \newcommand{\x}{{\mathbold x}}
+    #+LaTex_HEADER: \newcommand{\bbeta}{{\mathbold \beta}}
+    #+LaTex_HEADER: \newcommand{\Y}{{\mathbold Y}}
+    #+LaTex_HEADER: \newcommand{\y}{{\mathbold y}}
+    #+LaTex_HEADER: \newcommand{\B}{{\mathbold B}}
+    #+LaTex_HEADER: \newcommand{\W}{{\mathbold W}}
+    #+LaTex_HEADER: \newcommand{\U}{{\mathbold U}}
+    #+LaTex_HEADER: \newcommand{\V}{{\mathbold V}}
+    #+LaTex_HEADER: \newcommand{\bH}{{\mathbold H}}
+    #+LaTex_HEADER: \newcommand{\R}{\mathbb{R}}
+    #+LaTex_HEADER: \DeclareMathOperator*{\argmin}{argmin}
+    #+LaTex_HEADER: \DeclareMathOperator*{\argmax}{argmax}
+    #+LaTex_HEADER: \DeclareMathOperator*{\tv}{TV}
+    #+LaTex_HEADER: \DeclareMathOperator*{\Tr}{Tr}
+    #+LaTex_HEADER: \DeclareMathOperator*{\FFT}{FFT}
+    #+LaTex_HEADER: \DeclareMathOperator*{\IFFT}{IFFT}
+    #+LaTex_HEADER: \DeclareMathOperator*{\diag}{diag}
+    #+LaTex_HEADER: \DeclareMathOperator*{\supp}{supp}
+    #+LaTex_HEADER: \DeclareMathOperator*{\tf}{tf}
+    #+LaTex_HEADER: \DeclareMathOperator*{\idf}{idf}
+    #+LaTex_HEADER: \DeclareMathOperator*{\df}{df}
+    #+LaTex_HEADER: \DeclareMathOperator*{\Var}{Var}
+    #+LaTex_HEADER: \DeclareMathOperator*{\Frob}{Frob}
+    #+LaTex_HEADER: \DeclareMathOperator*{\F}{F}
+    #+LaTex_HEADER: \DeclareMathOperator*{\softmax}{softmax}
+    #+LaTex_HEADER: \DeclareMathOperator*{\AUC}{AUC}
+
+    #+LaTeX_HEADER: \usepackage{bm}
+** color theme
+   # #+BEAMER_COLOR_THEME: dove
+   # #+BEAMER_COLOR_THEME: seagull
+
+   #+LaTeX_HEADER: \usecolortheme{dove}
+   #+LaTeX_HEADER: \setbeamercolor*{block title example}{fg=black,bg=white}
+   #+LaTeX_HEADER: \setbeamercolor*{block body example}{fg=black,bg=white}
+
+* Problem setting
+
+ \begin{equation}
+ Y = f(X) + E
+ \end{equation}
+\vspace{-10pt}
+ - \(Y \in \R \): output (\aka target, dependent variable) to predict
+ - \(X \in \R^p \): features (\aka inputs, regressors, descriptors, independent variables)
+ - \(E \in \R \): unmodelled noise
+ - \(f\): the function we try to approximate
+* Parameter estimation \aka model fitting
+Minimize a sum of:
+- the empirical risk: error on training data
+- a regularization term
+** Example: logistic regression
+\begin{equation}
+\argmin_{\bbeta, \beta_0} \frac{1}{2} \| \bbeta \|_2^2 + C \sum_{i=1}^n \log(\exp(-y_i \, (\X_i^T \, \bbeta + \beta_0)) + 1)
+\end{equation}
+** params                                                    :B_structureenv:
+   :PROPERTIES:
+   :BEAMER_env: structureenv
+   :END:
+   - \(\bbeta, \beta_0\): parameters to be /estimated/
+   - \(C\): hyperparameter, /chosen/ prior to learning
+     (controls amount of regularization)
+[[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html][=sklearn.linear_model.LogisticRegression=]]
+* scikit-learn "estimator API": =fit; predict=
+#+BEGIN_EXAMPLE
+estimator = LogisticRegression(C=1)
+estimator.fit(X_train, y_train)
+predictions = estimator.predict(X_test)
+#+END_EXAMPLE
+\vfill
+https://scikit-learn.org/stable/getting_started.html
+[[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html][=sklearn.linear_model.LogisticRegression=]]
+
+* Evaluating performance with =sklearn.metrics=
+#+BEGIN_EXAMPLE
+estimator = LogisticRegression(C=1)
+estimator.fit(X_train, y_train)
+predictions = estimator.predict(X_test)
+
+accuracy = metrics.accuracy_score(y_test, predictions)
+#+END_EXAMPLE
+\vfill
+https://scikit-learn.org/stable/getting_started.html
+[[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html][=sklearn.linear_model.LogisticRegression=]]
+[[https://scikit-learn.org/stable/modules/classes.html#module-sklearn.metrics][=sklearn.metrics=]]
+[[https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules][more info on model evaluation]]
+\vfill
+=ex_01_fit_predict.py=
+* Cross-validation
+#+ATTR_LATEX: :height .7 \textheight
+[[file:cv_figure_simple.pdf]]
+
+[[https://scikit-learn.org/stable/modules/cross_validation.html][=scikit-learn.org/stable/modules/cross_validation.html=]]
+[[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.cross_validate=]]
+# https://scikit-learn.org/stable/auto_examples/model_selection/plot_cv_indices.html#sphx-glr-auto-examples-model-selection-plot-cv-indices-py
+=ex_02_cross_validate.py=
+
+* Dataset transformations
+** Typical pipeline
+ [[file:pipeline.pdf]]
+
+** Example: for autism prediction with fMRI from ML part 1
+ [[file:pipeline_example.pdf]]
+* scikit-learn "transformer API": =fit; transform=
+  #+begin_example
+transformer = StandardScaler()
+transformer.fit(X_train)
+transformed_X = transformer.transform(X_train)
+  #+end_example
+** can also be written:
+   #+begin_example
+transformer = StandardScaler()
+transformed_X = transformer.fit_transform(X_train)
+   #+end_example
+** links                                                     :B_structureenv:
+   :PROPERTIES:
+   :BEAMER_env: structureenv
+   :END:
+ \vfill
+ [[https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler][=sklearn.preprocessing.StandardScaler=]]
+
+ [[https://scikit-learn.org/stable/getting_started.html#transformers-and-pre-processors][scikit-learn "getting started"]]
+
+ [[https://scikit-learn.org/stable/data_transforms.html][scikit-learn "user guide"]]
+
+\vfill
+=ex_03_transformer.py=
+* scikit-learn "transformer API": =fit; transform=
+  #+begin_example
+transformer = StandardScaler()
+transformed_X = transformer.fit_transform(X_train)
+
+transformed_X_test = transformer.transform(X_test)
+  #+end_example
+\vfill
+[[file:pipeline_transformer_estimator.pdf]]
+
+[[https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler][=sklearn.preprocessing.StandardScaler=]]
+
+[[https://scikit-learn.org/stable/getting_started.html#transformers-and-pre-processors][scikit-learn "getting started"]]
+
+[[https://scikit-learn.org/stable/data_transforms.html][scikit-learn "user guide"]]
+* Example: =preprocessing.StandardScaler=
+** =fit:=
+   Compute mean and standard deviation of each column
+** =transform:=
+   Subtract mean and divide by standard deviation
+** link                                                      :B_structureenv:
+   :PROPERTIES:
+   :BEAMER_env: structureenv
+   :END:
+
+[[https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler][=sklearn.preprocessing.StandardScaler=]]
+* Example: =feature_selection.SelectKBest=
+** =fit:=
+   - compute ANOVA or correlation for each column of \(X\)
+   - Remember the indices of the \(k\) columns with highest scores
+** =transform:=
+   - Index input to keep only the \(k\) selected columns
+
+
+** link                                                      :B_structureenv:
+   :PROPERTIES:
+   :BEAMER_env: structureenv
+   :END:
+[[https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest][=sklearn.feature_selection.SelectKBest=]]
+
+https://scikit-learn.org/stable/modules/feature_selection.html
+
+=ex_04_feature_selection.py=
+* Example: =decomposition.PCA=
+** =fit:=
+- Compute Singular Value Decomposition of \(\X\)
+*** Singular Value Decomposition                             :B_structureenv:
+    :PROPERTIES:
+    :BEAMER_env: structureenv
+    :END:
+\begin{equation}
+\X = \U \, \bS \, \V^T
+\end{equation}
+#+ATTR_LATEX: :height .5 \textheight :center
+[[file:figures/generated/pca_step_by_step/pca_steps_1.pdf]]
+
+* Example: =decomposition.PCA=
+** =fit:=
+- Compute Singular Value Decomposition of \(\X\)
+*** Singular Value Decomposition                             :B_structureenv:
+    :PROPERTIES:
+    :BEAMER_env: structureenv
+    :END:
+\begin{equation}
+\X = \U \, \bS \, \V^T
+\end{equation}
+#+ATTR_LATEX: :height .5 \textheight :center
+[[file:figures/generated/pca_step_by_step/pca_steps_2.pdf]]
+
+* Example: =decomposition.PCA=
+** =fit:=
+- Compute Singular Value Decomposition of \(\X\)
+*** Singular Value Decomposition                             :B_structureenv:
+    :PROPERTIES:
+    :BEAMER_env: structureenv
+    :END:
+\begin{equation}
+\X = \U \, \bS \, \V^T
+\end{equation}
+#+ATTR_LATEX: :height .5 \textheight :center
+[[file:figures/generated/pca_step_by_step/pca_steps_3.pdf]]
+
+* Example: =decomposition.PCA=
+** =fit:=
+- Compute Singular Value Decomposition of \(\X\)
+\begin{equation*}
+\X = \U \, \bS \, \V^T
+\end{equation*}
+- store \(\V\)
+** =transform:=
+Compute projection on column space of \(\V\): simply multiply by \(\V^T\)
+*** Notes
+- =fit_transform=: simply return \(\U \, \bS\)
+- \(\V^T\) is the `components_` attribute of a fitted `PCA` instance
+** link                                                      :B_structureenv:
+   :PROPERTIES:
+   :BEAMER_env: structureenv
+   :END:
+[[https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA][=sklearn.decomposition.PCA=]]
+* COMMENT Chaining transformations
+  #+begin_example
+feat_extraction = ConnectivityMeasure()
+standardization = StandardScaler()
+dim_reduction = PCA()
+
+X = feat_extraction.fit_transform(X)
+X = standardization.fit_transform(X)
+X = dim_reduction.fit_transform(X)
+
+estimator = LogisticRegression()
+estimator.fit(X, y)
+  #+end_example
+* Chaining transformations
+Use [[https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline][=sklearn.pipeline.Pipeline=]] or [[https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline][=sklearn.pipeline.make_pipeline=]]:
+  #+begin_example
+pipe = make_pipeline(
+    standardizer, dim_reductor, estimator
+)
+pipe.fit(X, y)
+  #+end_example
+** Example:
+   #+begin_example
+make_pipeline(
+    StandardScaling(), PCA(), LogisticRegression()
+)
+   #+end_example
+* Hyperparameter selection                                      :B_fullframe:
+  :PROPERTIES:
+  :BEAMER_env: fullframe
+  :END:
+** var                                                                :BMCOL:
+   :PROPERTIES:
+   :BEAMER_col: .33
+   :END:
+\(\small{ \text{Var}(\hat{\beta}_i) = \mathbb{E}(\hat{\beta}_i  - \mathbb{E}(\hat{\beta}_i))^2} \)
+
+** plot                                                               :BMCOL:
+   :PROPERTIES:
+   :BEAMER_col: .38
+   :END:
+ #+ATTR_LATEX: :height \textheight
+ [[file:ridge_regularization_path.pdf]]
+** bias                                                               :BMCOL:
+   :PROPERTIES:
+   :BEAMER_col: .3
+   :END:
+\(\small \text{Bias}(\hat{\beta}_i) = \mathbb{E}(\hat{\beta}_i) - \beta_i\)
+* Nested cross-validation
+[[file:cv_figure_nested.pdf]]
+see  [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.GridSearchCV=]]
+* Implementing nested CV
+  =ex_05_nested_cross_validation.py=
+* Cross-validation and hyperparameter selection in scikit-learn
+- [[https://scikit-learn.org/stable/modules/classes.html#module-sklearn.pipeline][=sklearn.pipeline.Pipeline= or =sklearn.pipeline.make_pipeline=]]
+- [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV][=sklearn.model_selection.GridSearchCV=]]
+- [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html?highlight=cross_validate#sklearn.model_selection.cross_validate][=sklearn.model_selection.cross_validate=]]
+- use =*CV= estimators! [[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html][=RidgeCV=]], [[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html][=LogisticRegressionCV=]], ...
+
+#+ATTR_LATEX: :height .5 \textheight
+[[file:grid.pdf]]
+* Cross-validation pitfalls
+- fitting part of the pipeline on the whole data: use =Pipeline=
+- ignoring some dependencies in the data: use the appropriate =cv= iterator: https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators
+- good cv scores on one dataset do not guarantee generalization to new data

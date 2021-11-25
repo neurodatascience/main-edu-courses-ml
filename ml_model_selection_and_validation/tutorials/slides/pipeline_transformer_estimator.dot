@@ -1,0 +1,20 @@
+digraph G{
+    rankdir="LR";
+    node[shape="rectangle" fontname="DejaVuSansMono"];
+    subgraph cluster_0 {
+        label = "Transformers"
+        color="lightgray"
+        style="filled"
+        fontname="DejaVu"
+        "ConnectivityMeasure" -> "StandardScaler" -> "PCA";
+
+}
+subgraph cluster_1{
+    label = "Estimator"
+    fontname="DejaVu"
+    "LogisticRegression";
+}
+"PCA" -> "LogisticRegression";
+
+
+}
