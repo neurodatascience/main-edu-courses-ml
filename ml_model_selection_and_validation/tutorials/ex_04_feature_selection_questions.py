@@ -15,8 +15,14 @@ print("feature selection in 'preprocessing':", scores)
 
 # Now fitting the whole pipeline on the training set only
 
-model = make_pipeline(SelectKBest(f_regression), Ridge())
-scores_pipe = cross_validate(model, X, y)["test_score"]
+# TODO:
+# - use `make_pipeline` to create a pipeline chaining a `SelectKBest` and a
+#   `Ridge`
+# - use `cross_validate` to obtain cross-validation scores for the whole
+#   pipeline treated as a single model
+# See: https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html
+model = "make_pipeline(???)"
+scores_pipe = ()
 print("feature selection on train set:", scores_pipe)
 
 plt.boxplot(

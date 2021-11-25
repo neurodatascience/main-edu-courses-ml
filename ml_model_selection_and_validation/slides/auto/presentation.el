@@ -6,13 +6,13 @@
    (TeX-add-to-alist 'LaTeX-provided-package-options
                      '(("inputenc" "utf8") ("fontenc" "T1") ("ulem" "normalem") ("eulervm" "euler-digits" "euler-hat-accent") ("IEEEtrantools" "retainorgcmds") ("textpos" "absolute" "overlay")))
    (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
    (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
    (TeX-run-style-hooks
     "latex2e"
@@ -74,20 +74,17 @@
     "softmax"
     "AUC")
    (LaTeX-add-labels
-    "sec:org7352da0"
-    "sec:org23ee727"
-    "sec:org1d2d15a"
-    "sec:orgbb72e20"
-    "sec:org25ea84f"
-    "sec:org5410742"
-    "sec:org6d2836d"
-    "sec:org801ab3d"
-    "sec:orgd7b72f8"
-    "sec:org39185c3"
-    "sec:org34b1036"
-    "sec:org28052d1"
-    "sec:org057d925"
-    "sec:orgc817c91"
-    "sec:org944cc88"))
+    "sec:org386943d"
+    "sec:org24b43b3"
+    "sec:org5ca5594"
+    "sec:org89d780c"
+    "sec:org11b5758"
+    "sec:org4a2e59d"
+    "sec:org2197992"
+    "sec:org4a4f901"
+    "sec:org39e7850"
+    "sec:org7d39106"
+    "sec:org63c218d"
+    "sec:org19603a5"))
  :latex)
 

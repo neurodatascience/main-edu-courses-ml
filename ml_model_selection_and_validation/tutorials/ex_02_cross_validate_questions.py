@@ -11,9 +11,8 @@ model = Ridge()
 # cross-validation strategy is used? what do the scores represent -- what
 # performance metric is used?
 # What is a good choice for k?
-scores = model_selection.cross_validate(
-    model, X, y, scoring="neg_mean_squared_error", cv=model_selection.KFold(5)
-)
+# Hint: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html
+scores = "???"
 print(scores)
 
 # if I am satisfied with scores

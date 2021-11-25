@@ -11,9 +11,9 @@
    # #+AUTHOR: Jérôme Dockès
 
    #+BEAMER_HEADER: \author{Jérôme Dockès \& Nikhil Bhagwat}
-   #+BEAMER_HEADER: \titlegraphic{\includegraphics[height=1.5cm]{figures/mcgill-university.png} \hspace{1.5cm} \includegraphics[height=1.5cm]{figures/origami-lab-logo.png}}
-   #+BEAMER_HEADER: \date{QLS course 2021-07-30}
-   #+BEAMER_HEADER: \subtitle{Dimensionality reduction \& cross-validation}
+   # #+BEAMER_HEADER: \titlegraphic{\includegraphics[height=1.5cm]{figures/mcgill-university.png} \hspace{1.5cm} \includegraphics[height=1.5cm]{figures/origami-lab-logo.png}}
+   #+BEAMER_HEADER: \date{MAIN tutorials course 2021-11-26}
+   #+BEAMER_HEADER: \subtitle{Model selection \& validation}
 
 ** latex headers
 *** fonts and beamer
@@ -42,14 +42,14 @@
     #+LaTeX_HEADER: \setbeamertemplate{itemize items}{•}
     #+LaTeX_HEADER: \setbeamertemplate{enumerate items}[default]
 
-    # #+LaTex_HEADER: \AtBeginSection[]
-    # #+LaTex_HEADER: {
-    # #+LaTex_HEADER: \begin{frame}<beamer>
-    # #+LaTex_HEADER: \frametitle{Outline}
-    # #+LaTex_HEADER: \tableofcontents[currentsection]
-    # #+LaTex_HEADER: \end{frame}
-    # #+LaTex_HEADER: }
-    # #+LaTex_HEADER: \setcounter{tocdepth}{1}
+    #+LaTex_HEADER: \AtBeginSection[]
+    #+LaTex_HEADER: {
+    #+LaTex_HEADER: \begin{frame}<beamer>
+    #+LaTex_HEADER: \frametitle{Outline}
+    #+LaTex_HEADER: \tableofcontents[currentsection]
+    #+LaTex_HEADER: \end{frame}
+    #+LaTex_HEADER: }
+    #+LaTex_HEADER: \setcounter{tocdepth}{1}
 
     #+LaTeX_HEADER: \setbeamertemplate{headline}{}
     #+LaTeX_HEADER: \setbeamertemplate{footline}{
@@ -123,7 +123,7 @@
    #+LaTeX_HEADER: \usecolortheme{dove}
    #+LaTeX_HEADER: \setbeamercolor*{block title example}{fg=black,bg=white}
    #+LaTeX_HEADER: \setbeamercolor*{block body example}{fg=black,bg=white}
-* Intro
+* Introduction: cross-validation
 ** Recap of part 1
 *** Recap of part 1
 **** Supervised learning
@@ -155,11 +155,6 @@
          - regression: mean squared error
          - classification: accuracy, ROC curve
        - Cross-validation
-****  
-     :PROPERTIES:
-     :BEAMER_act: <3->
-     :END:
-  Don't remember? watch Part 1 again!
 *** Notation & vocabulary
 **** Supervised learning framework
  \begin{equation}
@@ -227,13 +222,14 @@ When you hear "best", "maximum", "select", ... think "bias"
   #+END_EXAMPLE
   \vfill
   https://scikit-learn.org/stable/getting_started.html
+
   [[https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html][=sklearn.linear_model.Ridge=]]
+
   [[https://scikit-learn.org/stable/modules/classes.html#module-sklearn.metrics][=sklearn.metrics=]]
+
   [[https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules][more info on model evaluation]]
   \vfill
   =ex_01_fit_predict.py=
-
-* Cross-validation
 
 ** cv
 *** Cross-validation
@@ -244,11 +240,14 @@ When you hear "best", "maximum", "select", ... think "bias"
   [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.cross_validate=]]
   # https://scikit-learn.org/stable/auto_examples/model_selection/plot_cv_indices.html#sphx-glr-auto-examples-model-selection-plot-cv-indices-py
   =ex_02_cross_validate.py=
-
 * Model and hyperparameter selection
-
 ** nested cv
+*** Regularization
 
+**** Example: ridge regression
+\begin{equation}
+\argmin_{\bbeta, \beta_0} \| \y - \beta_0 - \X \, \bbeta \| + \alpha \, \|\bbeta\|_2^2
+\end{equation}
 *** Example hyperparameter: regularization                      :B_fullframe:
     :PROPERTIES:
     :BEAMER_env: fullframe
@@ -273,7 +272,7 @@ When you hear "best", "maximum", "select", ... think "bias"
   \(\small \text{Bias}(\hat{\beta}_i) = \mathbb{E}(\hat{\beta}_i) - \beta_i\)
 
 *** Setting hyperparameters
-**** How can we choose the ridge hyperparameter \(\lambda\)?
+**** How can we choose the ridge hyperparameter \(\alpha\)?
 **** answer                                                 :B_ignoreheading:
      :PROPERTIES:
      :BEAMER_env: ignoreheading
@@ -293,13 +292,11 @@ When you hear "best", "maximum", "select", ... think "bias"
     :PROPERTIES:
     :BEAMER_act: <3->
     :END:
-     - Repeat step 1 for a few values of \(\lambda\), \(k\), \etc., fitting and testing several models
+     - Repeat step 1 for a few values of \(\alpha\), fitting and testing several models
      - *Select* the hyperparameter that obtains the *best* prediction on test data
      - The prediction score of that model on /test/ data is biased: evaluate it again on unseen data
 *** One split
 [[file:figures/generated/train_eval_test/datasets.pdf]]
-
-
 *** Nested cross-validation
 [[file:figures/generated/cv_figure_nested.pdf]]
   see  [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.GridSearchCV=]]
@@ -339,51 +336,20 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
     - Risk of overfitting: fitting exactly training data but failing on test data
 
     #+ATTR_LATEX: :height .7\textheight
-    [[file:figures/generated/ridge_overfitting/mse.pdf]]
-*** Same plot in log scale
-    #+ATTR_LATEX: :height .7\textheight
     [[file:figures/generated/ridge_overfitting/mse_log.pdf]]
-
-*** COMMENT Cost of fitting many parameters
-    - Many algorithms require polynomial time in \(p\)
-    - Implementations often make copies of the design matrix (\eg for centering & rescaling)
-    #+ATTR_LATEX: :height .7\textheight
-    [[file:figures/generated/ridge_overfitting/durations.pdf]]
-    # in the example, solved with cholesky decomposition so complexity is O(p^3) (cholesky) + O(np^2) (X^T X)
 ** Univariate feature selection
-*** Solution 1: univariate feature selection
+*** Univariate feature selection
     - \aka feature screening, filtering ...
     - Check features (columns of \(\X\)) one by one for association with the output \(\y\)
     - Keep only a fixed number or percentage of the features
 **** Simple (linear) association criteria
-     :PROPERTIES:
-     :BEAMER_act: <2->
-     :END:
      - for regression: correlation
      - for classification: ANalysis Of VAriance
 **** Read more in the scikit-learn user guide
-     :PROPERTIES:
-     :BEAMER_act: <2->
-     :END:
- https://scikit-learn.org/stable/modules/feature_selection.html#feature-selection
-
-*** COMMENT Simple selection criteria
-
-- Regression: correlation
-
-#+ATTR_LATEX: :height .4 \textheight
-[[file:figures/generated/univariate_selection/regression.pdf]]
-- Classification: ANOVA
-\vspace{-2pt}
-#+ATTR_LATEX: :height .4 \textheight
-[[file:figures/generated/univariate_selection/classification.pdf]]
+     [[https://scikit-learn.org/stable/modules/feature_selection.html#feature-selection][scikit-learn feature selection]]
 
 *** Univariate feature selection
     Keeping only the 10 best features (most correlated with \(\y\))
-    #+ATTR_LATEX: :height .7\textheight
-    [[file:figures/generated/ridge_overfitting/mse_with_dim_reduction.pdf]]
-
-*** Same plot in log scale
     #+ATTR_LATEX: :height .7\textheight
     [[file:figures/generated/ridge_overfitting/mse_with_dim_reduction_log.pdf]]
 
@@ -409,28 +375,12 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
      :BEAMER_env: structureenv
      :END:
    \vfill
-   [[https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler][=sklearn.preprocessing.StandardScaler=]]
 
-   [[https://scikit-learn.org/stable/getting_started.html#transformers-and-pre-processors][scikit-learn "getting started"]]
-
-   [[https://scikit-learn.org/stable/data_transforms.html][scikit-learn "user guide"]]
+   [[https://scikit-learn.org/stable/modules/feature_selection.html][scikit-learn feature selection]]
 
   \vfill
-  =ex_03_transformer.py=
-*** scikit-learn "transformer API": =fit; transform=
-    #+begin_example
-  transformer = SelectKBest()
-  transformed_X = transformer.fit_transform(X_train)
 
-  transformed_X_test = transformer.transform(X_test)
-    #+end_example
-
-  [[https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler][=sklearn.preprocessing.StandardScaler=]]
-
-  [[https://scikit-learn.org/stable/getting_started.html#transformers-and-pre-processors][scikit-learn "getting started"]]
-
-  [[https://scikit-learn.org/stable/data_transforms.html][scikit-learn "user guide"]]
-*** Example: =feature_selection.SelectKBest=
+*** =feature_selection.SelectKBest=
 **** =fit:=
      - compute ANOVA or correlation for each column of \(X\)
      - Remember the indices of the \(k\) columns with highest scores
@@ -444,10 +394,18 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
      :END:
   [[https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html#sklearn.feature_selection.SelectKBest][=sklearn.feature_selection.SelectKBest=]]
 
-  https://scikit-learn.org/stable/modules/feature_selection.html
 
+
+*** scikit-learn "transformer API": =fit; transform=
+    #+begin_example
+  transformer = SelectKBest()
+  transformed_X_train = transformer.fit_transform(X_train)
+
+  transformed_X_test = transformer.transform(X_test)
+    #+end_example
+
+\vfill
   =ex_04_feature_selection.py=
-
 ** Linear decomposition methods
 *** Solution 2: linear decomposition methods
 **** Maybe OK to drop $\X_2$:
@@ -587,35 +545,23 @@ Many other methods use the same objective (sum of squared reconstruction errors)
      - Some other methods take it into account: \eg Partial Least Squares
 *** Ridge regression and PCA
     - Both ridge regression and PC regression compute the coordinates of \(\y\) in the basis given by the SVD of \(\X\)
-    - Ridge shrinks the coordinate along \(\U_j\) by a factor \(s_j^2 / (s_j^2 + \lambda)\)
+    - Ridge shrinks the coordinate along \(\U_j\) by a factor \(s_j^2 / (s_j^2 + \alpha)\)
     - PC regression sets the coordinates to 0 except for those corresponding to the \(k\) largest \(s_j\): shrinks by a factor \(\mathbold{1}_{\{j \leq k\}}\)
 
 #+ATTR_LATEX: :height .6\textheight
 [[file:figures/generated/dim_reduction_colors/regression_reduced_3_svd.pdf]]
-* More on cross-validation
-*** Some common pitfalls with cross-validation
+* Conclusion
+*** Some pitfalls with cross-validation
+**** Overfitting the hyperparameters
+       + select hyperparameters with nested CV [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.GridSearchCV=]]
 **** Fitting part of the pipeline on the whole dataset
-     :PROPERTIES:
-     :BEAMER_act: <1->
-     :END:
-       + \eg fit PCA on all data, then do cross-validation on dim-reduced dataset
        + use  [[https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html][=sklearn.pipeline.Pipeline=]]
 **** Ignoring dependencies between samples
-     :PROPERTIES:
-     :BEAMER_act: <2->
-     :END:
-         + Multiple datapoints per participant
-         + Time series
+         + e.g. time series: use appropriate [[https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators][cross-validation iterator]]
 **** Ignoring dependencies between CV scores
-     :PROPERTIES:
-     :BEAMER_act: <3->
-     :END:
          + Training sets overlap: cross-validation scores of different splits are not independent
 **** Over-interpreting good CV scores
-     :PROPERTIES:
-     :BEAMER_act: <4->
-     :END:
-         + Good CV scores on one dataset do not mean the model will always perform well on a new dataset
+         + Good CV scores do not mean the model will always perform well on a new dataset
 
 *** Split choice example: time series
 Which is easier?
@@ -629,15 +575,3 @@ Which is easier?
 [[file:figures/generated/train_eval_test/cv_not_nested.pdf]]
 
 So the scores are not independent! Their variance can be underestimated.
-*** COMMENT Two sources of variance: training data and test sample
-    Don't use Leave-One-Out Cross-validation
-* Neuroimaging application: a task-fMRI prediction pipeline
-** FMRI decoding
-*** Supervised learning with fMRI
-    - Predict in which site / with which scanner a resting-state fMRI sequence was acquired
-*** The prediction pipeline
-    - Masking: extracting voxels that are inside the brain
-    - Connectivity: measuring correlations between brain regions to build a feature vector for each participant
-    - Univariate feature selection with ANalysis Of VAriance
-    - Classifier: logistic regression
-*** Implementation: in class

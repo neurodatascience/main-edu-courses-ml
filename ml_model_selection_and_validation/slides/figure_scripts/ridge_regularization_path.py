@@ -72,7 +72,7 @@ axes[0].set_title(r"$R^2$ score")
 axes[0].set_ylabel("")
 axes[0].set_xscale("log")
 # axes[0].set_ylim(-.1, 1.1)
-axes[-1].set_xlabel(r"$\lambda$")
+axes[-1].set_xlabel(r"$\alpha$")
 # axes[1].legend([r"$\hat{\beta}$", r"$\beta$"], frameon=False)
 axes[1].legend(["estimate", "true coef"], frameon=False, loc="center right")
 axes[-1].text(

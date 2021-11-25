@@ -8,11 +8,11 @@ fig, axes = plt.subplots(1, 3, figsize=(5, 1.2), gridspec_kw={"wspace": 0})
 
 titles = ["Train", "Validation", "Test"]
 descriptions = [
-    r"""Choose $\beta(\lambda_i)$
-for each $\lambda_i$""",
-    r"""Evaluate $\beta(\lambda_i)$;
-Choose $\lambda$""",
-    r"Evaluate $\beta(\lambda)$",
+    r"""Choose $\beta(\alpha_i)$
+for each $\alpha_i$""",
+    r"""Evaluate $\beta(\alpha_i)$;
+Choose $\alpha$""",
+    r"Evaluate $\beta(\alpha)$",
 ]
 for ax, c, d, t in zip(axes, COLORS, descriptions, titles):
     ax.set_facecolor(c)

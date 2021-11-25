@@ -78,10 +78,10 @@ def show_inner_cv(fold_idx, fold_grid, fig, inner_k, outer_train_idx):
         add_box(nested_cv_grid[2 * i : 2 * i + 2, 0], fig, f"Fold {i}")
         add_box(nested_cv_grid[2 * i, 1], fig, "Train")
         add_box(nested_cv_grid[2 * i + 1, 1], fig, "Test")
-        add_box(nested_cv_grid[2 * i, 2], fig, "For all λ")
-        add_box(nested_cv_grid[2 * i + 1, 2], fig, "For all λ")
+        add_box(nested_cv_grid[2 * i, 2], fig, "For all ɑ")
+        add_box(nested_cv_grid[2 * i + 1, 2], fig, "For all ɑ")
     add_box(nested_cv_grid[-1, :2], fig, "Refit")
-    add_box(nested_cv_grid[-1, 2], fig, "For best λ")
+    add_box(nested_cv_grid[-1, 2], fig, "For best ɑ")
     show_inner_splits(inner_k, nested_cv_grid, fig, outer_train_idx)
 
 

@@ -5,12 +5,16 @@ from sklearn.model_selection import cross_validate, GridSearchCV
 from matplotlib import pyplot as plt
 
 X, y = make_classification()
+# TODO: use `GridSearchCV` to create an object that will do inner
+# cross-validation for hyperparameter selection
+# TODO_BEGIN
 model = GridSearchCV(
     LogisticRegression(solver="liblinear"),
     {"C": [0.01, 0.1, 1.0], "penalty": ["l1", "l2"]},
 )
 scores = cross_validate(model, X, y)
 print(scores)
+# TODO_END
 
 # display the grid of hyperparameters
 

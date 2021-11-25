@@ -25,9 +25,9 @@ X_train, X_test = X[:80], X[80:]
 y_train, y_test = y[:80], y[80:]
 
 model = Ridge(alpha=1e-8)
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
-mse = mean_squared_error(y_test, predictions)
+# TODO: fit the model on training data only, get predictions for test data, and
+# compute prediction error. Is it much larger than error on the training data?
+mse = "???"
 
 print(f"\nOn a separate test set:\nOut-of-sample Mean Squared Error: {mse}")
 # -
