@@ -223,20 +223,19 @@ def grid_search(model, C_candidates, X, y, inner_k, score_fun):
     all_scores = []
     for C in C_candidates:
         print(f"  Grid search: evaluate hyperparameter C = {C}")
-        scores_for_this_C = []
-        for train_idx, test_idx in get_kfold_splits(len(y), inner_k):
-            score = fit_and_score(
-                model, C, X, y, train_idx, test_idx, score_fun
-            )
-            scores_for_this_C.append(score)
-        all_scores.append(np.mean(scores_for_this_C))
-    best_C = C_candidates[np.argmax(all_scores)]
+        # **TODO** : run 3-fold cross-validation loop, using this particular
+        # hyperparameter C. Compute the mean of scores accross cross-validation
+        # folds and append it to `all_scores`.
+
+    # **TODO**: select the best hyperparameter according to the CV scores,
+    # refit the model on the whole data using this hyperparameter, and return
+    # the fitted model. Use `model.set_params` to set the hyperparameter
+    best_C = "???"
     print(f"  ** Grid search: keep best hyperparameter C = {best_C} **")
     # `clone` is to work with a copy of `model` instead of modifying the
     # argument itself.
     best_model = clone(model)
-    best_model.set_params(C=best_C)
-    best_model.fit(X, y)
+    # TODO ...
     return best_model
 
 

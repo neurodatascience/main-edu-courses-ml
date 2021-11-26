@@ -22,7 +22,7 @@
     #+LaTeX_HEADER: \usepackage[T1]{fontenc}
 
     #+LaTeX_HEADER: \usepackage{DejaVuSans}
-    # #+LaTeX_HEADER: \usepackage{DejaVuSansMono}
+    #+LaTeX_HEADER: \usepackage{DejaVuSansMono}
 
     # #+LaTeX_HEADER: \usepackage[default]{opensans}
     # #+LaTeX_HEADER: \usepackage{lmodern}
@@ -175,13 +175,19 @@
  Y & = & \beta_0 + \langle X, \beta \rangle + E \\
 & = & \beta_0 + \sum_{j=1}^p X_j \, \beta_j + E
  \end{IEEEeqnarray}
-"learning" = estimating \(\beta_0 \in \R\) and \(\beta \in \R^p\)
-*** How to estimate parameters: Empirical Risk Minimization
+"learning" = choosing \(\beta_0 \in \R\) and \(\beta \in \R^p\)
+*** How to set parameters: Empirical Risk Minimization
+    - Choose a loss function \(L\) measuring how bad is our error.
+    - Example: squared error \(L(Y, \hat{Y}) = (Y - \hat{Y})^2\), where \(\hat{Y}\) is the prediction
+    - We want to minimize the expected error (risk): \(\mathbb{E}[L(Y, \hat{Y})]\)
+*** How to set parameters: Empirical Risk Minimization
+We do not know the risk: estimate it from a sample.
+
 Given \(n\) training examples \(\X \in \R^{n \times p}\), \(\y \in \R^n\),
+minimize the empirical risk: \(\sum_{i=1}^n L(\y_i, \hat{\y_i})\)
 
-find \(\hat{\beta}_0 \in \R, \hat{\bbeta} \in \R^p\)
-
-that minimize the empirical risk:
+**** For linear regression:
+find \(\hat{\beta}_0 \in \R, \hat{\bbeta} \in \R^p\) that minimize
 \begin{IEEEeqnarray}{rcl}
 \| \y - \hat{\y} \|_2^2 & \; = \; & \| \y - \hat{\beta}_0 - \X \, \hat{\bbeta} \|_2^2 \\
 & \; = \; & \sum_{i=1}^n (\y_i - \hat{\beta}_0 - \sum_{j=1}^p \X_{ij}\, \hat{\bbeta}_j )^2
@@ -229,7 +235,7 @@ When you hear "best", "maximum", "select", ... think "bias"
 
   [[https://scikit-learn.org/stable/modules/model_evaluation.html#the-scoring-parameter-defining-model-evaluation-rules][more info on model evaluation]]
   \vfill
-  =ex_01_fit_predict.py=
+  =ex_01_fit_predict_questions.py=
 
 ** cv
 *** Cross-validation
@@ -239,14 +245,14 @@ When you hear "best", "maximum", "select", ... think "bias"
   [[https://scikit-learn.org/stable/modules/cross_validation.html][=scikit-learn.org/stable/modules/cross_validation.html=]]
   [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.cross_validate=]]
   # https://scikit-learn.org/stable/auto_examples/model_selection/plot_cv_indices.html#sphx-glr-auto-examples-model-selection-plot-cv-indices-py
-  =ex_02_cross_validate.py=
+  =ex_02_cross_validate_questions.py=
 * Model and hyperparameter selection
 ** nested cv
 *** Regularization
 
 **** Example: ridge regression
 \begin{equation}
-\argmin_{\bbeta, \beta_0} \| \y - \beta_0 - \X \, \bbeta \| + \alpha \, \|\bbeta\|_2^2
+\argmin_{\bbeta, \beta_0} \| \y - \beta_0 - \X \, \bbeta \|_2^2 + \alpha \, \|\bbeta\|_2^2
 \end{equation}
 *** Example hyperparameter: regularization                      :B_fullframe:
     :PROPERTIES:
@@ -301,8 +307,23 @@ When you hear "best", "maximum", "select", ... think "bias"
 [[file:figures/generated/cv_figure_nested.pdf]]
   see  [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.GridSearchCV=]]
 
+*** Nested cross-validation with scikit-learn
+- In general: [[https://scikit-learn.org/stable/modules/grid_search.html#grid-search][GridSearchCV]] ([[https://scikit-learn.org/stable/modules/grid_search.html#grid-search][User Guide]])
+#+BEGIN_EXAMPLE
+model = GridSearchCV(
+    Ridge(), {"alpha": [.1, 1., 10.]})
+
+model.fit(X, y)
+#+END_EXAMPLE
+- Use =CV= estimators when possible: =RidgeCV=, =LassoCV=
+
+
+\vfill
+
+
+=ex_03_grid_search_regression_questions.py=
 *** Implementing nested CV
-    =ex_05_nested_cross_validation.py=
+    =ex_04_nested_cross_validation_questions.py=
 * Dimensionality reduction
 ** Intro
 *** Dimensionality reduction
@@ -362,13 +383,13 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
 *** scikit-learn "transformer API": =fit; transform=
     #+begin_example
   transformer = SelectKBest()
-  transformer.fit(X_train)
-  transformed_X = transformer.transform(X_train)
+  transformer.fit(X)
+  transformed_X = transformer.transform(X)
     #+end_example
 **** can also be written:
      #+begin_example
   transformer = SelectKBest()
-  transformed_X = transformer.fit_transform(X_train)
+  transformed_X = transformer.fit_transform(X)
      #+end_example
 **** links                                                   :B_structureenv:
      :PROPERTIES:
@@ -378,6 +399,7 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
 
    [[https://scikit-learn.org/stable/modules/feature_selection.html][scikit-learn feature selection]]
 
+[[https://scikit-learn.org/stable/getting_started.html#transformers-and-pre-processors][scikit-learn =Transformer= API]]
   \vfill
 
 *** =feature_selection.SelectKBest=
@@ -396,18 +418,34 @@ See [[https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_re
 
 
 
-*** scikit-learn "transformer API": =fit; transform=
+*** Fit the transformer only on train data!
     #+begin_example
   transformer = SelectKBest()
-  transformed_X_train = transformer.fit_transform(X_train)
+  transformed_train = transformer.fit_transform(X_train)
 
-  transformed_X_test = transformer.transform(X_test)
+  transformed_test = transformer.transform(X_test)
     #+end_example
 
-\vfill
-  =ex_04_feature_selection.py=
+*** Pipelines
+To chain transformations and an estimator, use [[https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html][=sklearn.pipeline.Pipeline=]]
+
+- can be used to properly cross-validate whole pipeline
+- can be combined with =cross_validate=, [[https://scikit-learn.org/stable/modules/compose.html#nested-parameters][=GridSearchCV=]], ...
+- easily created with [[https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html][=sklearn.pipeline.make_pipeline=]]
+
+#+begin_example
+model = make_pipeline(
+    SelectKBest(), LogisticRegression())
+#+end_example
+**** links                                                   :B_structureenv:
+     :PROPERTIES:
+     :BEAMER_env: structureenv
+     :END:
+ \vfill
+   =ex_04_feature_selection_questions.py=
 ** Linear decomposition methods
-*** Solution 2: linear decomposition methods
+*** Linear decomposition methods
+Another approach to dimensionality reduction
 **** Maybe OK to drop $\X_2$:
      \vspace{-10pt}
      #+ATTR_LATEX: :height .3\textheight
@@ -550,7 +588,7 @@ Many other methods use the same objective (sum of squared reconstruction errors)
 
 #+ATTR_LATEX: :height .6\textheight
 [[file:figures/generated/dim_reduction_colors/regression_reduced_3_svd.pdf]]
-* Conclusion
+* Conclusion: summary of pitfalls
 *** Some pitfalls with cross-validation
 **** Overfitting the hyperparameters
        + select hyperparameters with nested CV [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.GridSearchCV=]]

@@ -6,13 +6,13 @@
    (TeX-add-to-alist 'LaTeX-provided-package-options
                      '(("inputenc" "utf8") ("fontenc" "T1") ("ulem" "normalem") ("eulervm" "euler-digits" "euler-hat-accent") ("IEEEtrantools" "retainorgcmds") ("textpos" "absolute" "overlay")))
    (add-to-list 'LaTeX-verbatim-environments-local "semiverbatim")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
    (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
    (TeX-run-style-hooks
     "latex2e"
@@ -32,6 +32,7 @@
     "capt-of"
     "hyperref"
     "DejaVuSans"
+    "DejaVuSansMono"
     "eulervm"
     "appendixnumberbeamer"
     "tikz"
@@ -74,17 +75,17 @@
     "softmax"
     "AUC")
    (LaTeX-add-labels
-    "sec:org386943d"
-    "sec:org24b43b3"
-    "sec:org5ca5594"
-    "sec:org89d780c"
-    "sec:org11b5758"
-    "sec:org4a2e59d"
-    "sec:org2197992"
-    "sec:org4a4f901"
-    "sec:org39e7850"
-    "sec:org7d39106"
-    "sec:org63c218d"
-    "sec:org19603a5"))
+    "sec:org1605c98"
+    "sec:orgce1b221"
+    "sec:orgf4aef92"
+    "sec:orgfae684a"
+    "sec:org220356d"
+    "sec:org0c091c7"
+    "sec:orge040448"
+    "sec:org56f8070"
+    "sec:orgb4bde90"
+    "sec:orgfbda8a8"
+    "sec:org24d660e"
+    "sec:orgb25fcdb"))
  :latex)
 
