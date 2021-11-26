@@ -75,17 +75,17 @@
     "softmax"
     "AUC")
    (LaTeX-add-labels
-    "sec:org1605c98"
-    "sec:orgce1b221"
-    "sec:orgf4aef92"
-    "sec:orgfae684a"
-    "sec:org220356d"
-    "sec:org0c091c7"
-    "sec:orge040448"
-    "sec:org56f8070"
-    "sec:orgb4bde90"
-    "sec:orgfbda8a8"
-    "sec:org24d660e"
-    "sec:orgb25fcdb"))
+    "sec:org9df8de9"
+    "sec:org8a8a045"
+    "sec:org870a947"
+    "sec:orgd6b2bb4"
+    "sec:org7c35b2d"
+    "sec:org39361d6"
+    "sec:org13b941c"
+    "sec:orgbb73443"
+    "sec:org47dbb2a"
+    "sec:org8757cff"
+    "sec:org5e2ce8b"
+    "sec:org8628cfd"))
  :latex)
 

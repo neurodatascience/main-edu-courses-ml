@@ -248,6 +248,38 @@ When you hear "best", "maximum", "select", ... think "bias"
   =ex_02_cross_validate_questions.py=
 * Model and hyperparameter selection
 ** nested cv
+
+*** Need for regularization
+Linear regression: projection on the column space of \(X\)
+\vspace{10pt}
+**** top                                                     :B_structureenv:
+     :PROPERTIES:
+     :BEAMER_env: structureenv
+     :END:
+***** equation                                               :B_column:BMCOL:
+      :PROPERTIES:
+      :BEAMER_env: column
+      :BEAMER_col: .3
+      :END:
+      \begin{equation}
+      \hat{\y} = \X \, \hat{\bbeta}
+      \end{equation}
+
+***** equation                                               :B_column:BMCOL:
+      :PROPERTIES:
+      :BEAMER_env: column
+      :BEAMER_col: .7
+      :END:
+      \vspace{-17pt}
+      #+ATTR_LATEX: :height .7\textheight
+      [[file:figures/generated/dim_reduction_colors/regression_full_3.pdf]]
+
+**** bottom                                                  :B_structureenv:
+     :PROPERTIES:
+     :BEAMER_env: structureenv
+     :END:
+     - Too many features: high variance & unstable solution
+     - Solutions: regularization, dimensionality reduction
 *** Regularization
 
 **** Example: ridge regression
