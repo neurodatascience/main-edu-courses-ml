@@ -6,6 +6,9 @@
    #+LaTeX_CLASS: beamer
    #+LaTeX_CLASS_OPTIONS: [presentation,mathserif,table]
 
+** macros
+#+MACRO: course_url https://github.com/neurodatascience/main-edu-courses-ml/tree/main/ml_model_selection_and_validation/
+#+MACRO: exercise [[https://github.com/neurodatascience/main-edu-courses-ml/tree/main/ml_model_selection_and_validation/exercises/$1][=$1=]]
 ** presentation info
    #+TITLE: Model selection and validation
    # #+AUTHOR: Jérôme Dockès
@@ -293,7 +296,7 @@ When you hear "best", "maximum", "select", ... think "bias"
 
   [[https://scikit-learn.org/stable/modules/model_evaluation.html][User guide on model evaluation]]
   \vfill
-  [[https://github.com/neurodatascience/course-materials-2022/blob/main/Lectures/08-Machine_Learning_2/exercises/ex_01_fit_predict_questions.py][=ex_01_fit_predict_questions.py=]]
+  {{{exercise(ex_01_fit_predict_questions.py)}}}
 
 *** Some possible metrics for regression
 
@@ -323,7 +326,7 @@ where \(\bar{y} = \frac{1}{n}\sum_{i=1}^n y_i\)
   [[https://scikit-learn.org/stable/modules/cross_validation.html][User guide on cross-validation]]
   [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html][=sklearn.model_selection.cross_validate=]]
   [[https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html][=sklearn.model_selection.cross_val_score=]]
-  [[https://github.com/neurodatascience/course-materials-2022/blob/main/Lectures/08-Machine_Learning_2/exercises/ex_02_cross_validate_questions.py][=ex_02_cross_validate_questions.py=]]
+  {{{exercise(ex_02_cross_validate_questions.py)}}}
 * Model and hyperparameter selection
 ** nested cv
 *** Need for regularization
@@ -432,9 +435,9 @@ scores = cross_val_score(model, X, y)
 
 \vfill
 
-[[https://github.com/neurodatascience/course-materials-2022/blob/main/Lectures/08-Machine_Learning_2/exercises/ex_03_grid_search_regression_questions.py][=ex_03_grid_search_regression_questions.py=]]
+{{{exercise(ex_03_grid_search_regression_questions.py)}}}
 *** Implementing nested CV
-    [[https://github.com/neurodatascience/course-materials-2022/blob/main/Lectures/08-Machine_Learning_2/exercises/ex_04_nested_cross_validation_questions.py][=ex_04_nested_cross_validation_questions.py=]]
+{{{exercise(ex_04_nested_cross_validation_questions.py)}}}
 * Dimensionality reduction
 ** Intro
 *** Dimensionality reduction
@@ -634,7 +637,7 @@ model = make_pipeline(SelectKBest(), Ridge())
      :BEAMER_env: structureenv
      :END:
  \vfill
-   [[https://github.com/neurodatascience/course-materials-2022/blob/main/Lectures/08-Machine_Learning_2/exercises/ex_05_feature_selection_questions.py][=ex_05_feature_selection_questions.py=]]
+ {{{exercise(ex_05_feature_selection_questions.py)}}}
 ** Linear decomposition methods
 *** Linear decomposition methods
 Another approach to dimensionality reduction
