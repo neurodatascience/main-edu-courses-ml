@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{estimator} \PYG{o}{=} \PYG{n}{Ridge}\PYG{p}{()}
+\PYG{n}{estimator}\PYG{o}{.}\PYG{n}{fit}\PYG{p}{(}\PYG{n}{X\PYGZus{}train}\PYG{p}{,} \PYG{n}{y\PYGZus{}train}\PYG{p}{)}
+\PYG{n}{predictions} \PYG{o}{=} \PYG{n}{estimator}\PYG{o}{.}\PYG{n}{predict}\PYG{p}{(}\PYG{n}{X\PYGZus{}test}\PYG{p}{)}
+\end{Verbatim}
