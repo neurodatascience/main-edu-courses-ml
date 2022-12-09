@@ -1,6 +1,6 @@
 .PHONY: all clean clean-all
 
-all: presentation.pdf
+all: ../model_selection_and_validation.pdf
 
 
 presentation.d: presentation.org
@@ -32,3 +32,6 @@ endif
 
 presentation.pdf: presentation.org $(figs)
 	emacs $< --batch -f org-beamer-export-to-pdf
+
+../model_selection_and_validation.pdf: presentation.pdf
+	pdftk F=figures/generated/cv_figure_nested.pdf P=presentation.pdf cat P1-33 F P35-end output $@
