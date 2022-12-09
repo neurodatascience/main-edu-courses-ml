@@ -246,7 +246,7 @@ The selected animal is more likely to perform *worse* on average than in 2018.
 [[file:figures/generated/select_evaluate/select_evaluate_3b.pdf]]
 Its 2018 performance is a *biased* estimator of its expected performance in future World Cups.
 *** Training error is a biased estimator of the risk
-Distribution of train and test errors across 30 repetitions:
+Distribution of train and test errors across 50 repetitions:
 #+ATTR_LATEX: :height .5 \textheight
 [[file:figures/generated/select_evaluate_averaged/select_evaluate_averaged_1.pdf]]
 *** Training error is a biased estimator of the risk

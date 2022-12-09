@@ -10,9 +10,9 @@ from config import FIGURES_DIR, TAB20_COLORS
 mpl.rc("text", usetex=False)
 
 rng = np.random.default_rng(0)
-n_samples = 20
+n_samples = 16
 n_models = 30
-n_experiments = 30
+n_experiments = 50
 
 accuracies = (
     rng.binomial(n_samples, 0.5, size=(n_experiments, n_models)) / n_samples
