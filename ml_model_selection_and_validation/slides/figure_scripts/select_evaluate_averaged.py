@@ -25,7 +25,7 @@ test_accuracies = (
 df = pd.concat(
     [
         pd.DataFrame(
-            {"accuracy": best_accuracies, "dataset": "Train:\nselect params"}
+            {"accuracy": best_accuracies, "dataset": "Train:\nselect predictor"}
         ),
         pd.DataFrame(
             {"accuracy": test_accuracies, "dataset": "Test:\nevaluate"}
