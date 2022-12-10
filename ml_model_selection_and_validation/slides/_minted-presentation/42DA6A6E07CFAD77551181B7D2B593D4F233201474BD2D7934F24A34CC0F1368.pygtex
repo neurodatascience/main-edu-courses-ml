@@ -1,5 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{transformer} \PYG{o}{=} \PYG{n}{SelectKBest}\PYG{p}{()}
-\PYG{n}{transformed\PYGZus{}train} \PYG{o}{=} \PYG{n}{transformer}\PYG{o}{.}\PYG{n}{fit\PYGZus{}transform}\PYG{p}{(}
-    \PYG{n}{X\PYGZus{}train}\PYG{p}{,} \PYG{n}{y\PYGZus{}train}\PYG{p}{)}
-\end{Verbatim}

@@ -133,6 +133,23 @@
    #+LaTeX_HEADER: \setbeamercolor*{block title example}{fg=black,bg=white}
    #+LaTeX_HEADER: \setbeamercolor*{block body example}{fg=black,bg=white}
 * Introduction: cross-validation
+** Instructions
+*** Setup reminder
+Clone the repository
+#+begin_src sh
+  git clone --depth 1 \
+    git@github.com:neurodatascience/main-edu-courses-ml.git
+  cd main-edu-courses-ml/ml_model_selection_and_validation
+  evince model_selection_and_validation.pdf &
+  cd exercises
+#+end_src
+Install Python and required packages
+#+begin_src sh
+pip install -U -r requirements.txt
+#+end_src
+\vspace{-20pt}
+- repository: [[https://github.com/neurodatascience/main-edu-courses-ml][=github.com/neurodatascience/main-edu-courses-ml=]]
+- [[https://drive.google.com/drive/folders/1fI8RPwqSsxIHeC0nGDbElaGTOK2q3qIy][notebooks in google drive]]
 ** Recap of part 1
 *** Recap of part 1
 **** Supervised learning
