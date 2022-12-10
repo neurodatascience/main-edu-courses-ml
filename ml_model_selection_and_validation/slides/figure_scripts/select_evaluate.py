@@ -18,7 +18,7 @@ best_model_idx = np.argmax(accuracies[:-1])
 best_accuracy = accuracies[:-1][best_model_idx]
 test_accuracy = accuracies[-1]
 df = pd.DataFrame(
-    {"Average prognostic accuracy": accuracies, "dataset": "2018\nWorld Cup"}
+    {"Accuracy": accuracies, "dataset": "2018\nWorld Cup"}
 )
 df.iloc[-1, 1] = "2022\nWorld Cup"
 
@@ -28,7 +28,7 @@ np.random.seed(0)
 sns.stripplot(
     data=df,
     x="dataset",
-    y="Average prognostic accuracy",
+    y="Accuracy",
     color=dim_color,
     alpha=0.5,
     jitter=jitter,

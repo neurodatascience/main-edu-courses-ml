@@ -219,17 +219,17 @@ find \(\hat{\beta}_0 \in \R, \hat{\bbeta} \in \R^p\) that minimize
      :END:
   We can never do both on the same data!
 *** Training error is a biased estimator of the risk
-- 30 different animals made prognostics about match results in the 2018 World Cup
+- 30 different animals made predictions about match results in the 2018 World Cup
 #+ATTR_LATEX: :height .65 \textheight
 [[file:figures/generated/select_evaluate/select_evaluate_1.pdf]]
 *** Training error is a biased estimator of the risk
-- 30 different animals made prognostics about match results in the 2018 world cup
-- We *selected the best predictor* (highest average accuracy)
+- 30 different animals made predictions about match results in the 2018 world cup
+- We *selected the best predictor* (highest accuracy)
 #+ATTR_LATEX: :height .65 \textheight
 [[file:figures/generated/select_evaluate/select_evaluate_2.pdf]]
 *** Training error is a biased estimator of the risk
 The same animal is invited to make predictions about the 2022 World Cup.
-Is it more likely to perform on average:
+Is it more likely to perform:
 1. Better than in 2018?
 2. Worse than in 2018?
 3. The same?
@@ -237,11 +237,11 @@ Is it more likely to perform on average:
 [[file:figures/generated/select_evaluate/select_evaluate_2b.pdf]]
 
 *** Training error is a biased estimator of the risk
-The selected animal is more likely to perform *worse* on average than in 2018.
+The selected animal is more likely to perform *worse* than in 2018.
 #+ATTR_LATEX: :height .65 \textheight
 [[file:figures/generated/select_evaluate/select_evaluate_3.pdf]]
 *** Training error is a biased estimator of the risk
-The selected animal is more likely to perform *worse* on average than in 2018.
+The selected animal is more likely to perform *worse* than in 2018.
 #+ATTR_LATEX: :height .65 \textheight
 [[file:figures/generated/select_evaluate/select_evaluate_3b.pdf]]
 Its 2018 performance is a *biased* estimator of its expected performance in future World Cups.
