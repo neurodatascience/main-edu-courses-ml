@@ -71,11 +71,10 @@ initial_model_intercept = np.random.uniform(0,1,1)
 
 # TODO
 # **Exercise**: write code to calculate y_hat for all training samples! 
-y_train_hat = initial_model_intercept + np.dot(X_train,initial_model_coefs) 
 
 
 # What is the error between model prediction (y_hat) and true values?
-initial_mse = np.mean((y_train_hat - y_train)**2)
+# initial_mse = np.mean((y_train_hat - y_train)**2)
 
 # ------ Uncomment lines in this block to print results ------- 
 
@@ -93,10 +92,8 @@ print('- 3) Use scikit-learn to fit the model -------------------------------')
 # Now let's use scikit-learn to fit the model to the training data.
 # +
 
-model = LinearRegression()
-model.fit(X_train, y_train)
-train_predictions = model.predict(X_train)
-train_mse = mean_squared_error(y_train, train_predictions)
+# model = LinearRegression()
+
 
 # TODO
 # **Exercise**: fit the model with training data and get the predictions. 
@@ -105,8 +102,8 @@ train_mse = mean_squared_error(y_train, train_predictions)
 # Let's look at the model parameters (aka weights aka coefficients): b1,b2,b3 ... 
 # Note that sklearn saves the b0 separately as intercept. 
 
-trained_model_intercept = model.intercept_
-trained_model_coef = model.coef_
+# trained_model_intercept = model.intercept_
+# trained_model_coef = model.coef_
 
 
 # TODO
@@ -116,10 +113,10 @@ trained_model_coef = model.coef_
 
 # ------ Uncomment lines in this block to print results ------- 
 
-print(f'\nThese are the model parameters after training:')
-print(f'b0 (intercept): {trained_model_intercept}\nb1-b10: {trained_model_coef}')
+# print(f'\nThese are the model parameters after training:')
+# print(f'b0 (intercept): {trained_model_intercept}\nb1-b10: {trained_model_coef}')
 # print(f'\nMy calculation of MSE after model training (on train data): {my_train_mse:.5g}')
-print(f"\nScikit-learn's calculation of MSE after model training (on train data): {train_mse:.5g}")
+# print(f"\nScikit-learn's calculation of MSE after model training (on train data): {train_mse:.5g}")
 
 # -------------------------------------------------------------
 
@@ -134,13 +131,11 @@ print('- 4) Evaluate our model on (unseen) test data ------------------------')
 
 # TODO
 # **Exercise**: Check test set performance 
-test_predictions = model.predict(X_test)
-test_mse = mean_squared_error(y_test, test_predictions)
 
 # ------ Uncomment lines in this block to print results ------- 
 
-print('\nBut what matters is the model performance on the test set!!')
-print(f"Mean squared error on test data: {test_mse:.5g}")
+# print('\nBut what matters is the model performance on the test set!!')
+# print(f"Mean squared error on test data: {test_mse:.5g}")
 
 # -------------------------------------------------------------
 
@@ -156,9 +151,7 @@ print('- 5) Compare our performance against dummy and oracle models ---------')
 
 # ------ Uncomment lines in this block to print results ------- 
 
-dummy_predictions = DummyRegressor().fit(X_train, y_train).predict(X_test)
-dummy_mse = mean_squared_error(y_test, dummy_predictions)
-print(f"\nMean squared error of dummy model on test data: {dummy_mse:.5g}")
+# print(f"\nMean squared error of dummy model on test data: {dummy_mse:.5g}")
 
 # What would be ideal predictions? (Impossible in real life!)
 # If we had a oracle predictor - it would predict the true values on the test set perfectly! 
@@ -180,27 +173,27 @@ print('\n----------------------------------------------------------------------'
 print('- 6) Make Plots! -----------------------------------------------------')
 
 # ------ Uncomment lines in this block to print results ------- 
-plt.plot(
-    [y_test.min(), y_test.max()],
-    [y_test.min(), y_test.max()],
-    color="black",
-    linestyle="--",
-)
-plt.scatter(y_test, oracle_predictions,marker="d")
-plt.scatter(y_test, test_predictions)
-plt.scatter(y_test, dummy_predictions, marker="^")
-plt.legend(
-    [
-        "Identity line",
-        "Oracle model --> Perfect prediction",
-        f"LinearRegression model (MSE = {test_mse:.5g})",
-        f"DummyRegressor model (MSE = {dummy_mse:.5g})",
-    ]
-)
-plt.gca().set_xlabel("True outcome")
-plt.gca().set_ylabel("Predicted outcome")
-plt.gca().set_title("True and predicted diabetes progress")
-plt.show()
+# plt.plot(
+#     [y_test.min(), y_test.max()],
+#     [y_test.min(), y_test.max()],
+#     color="black",
+#     linestyle="--",
+# )
+# plt.scatter(y_test, oracle_predictions,marker="d")
+# plt.scatter(y_test, test_predictions)
+# plt.scatter(y_test, dummy_predictions, marker="^")
+# plt.legend(
+#     [
+#         "Identity line",
+#         "Oracle model --> Perfect prediction",
+#         f"LinearRegression model (MSE = {test_mse:.5g})",
+#         f"DummyRegressor model (MSE = {dummy_mse:.5g})",
+#     ]
+# )
+# plt.gca().set_xlabel("True outcome")
+# plt.gca().set_ylabel("Predicted outcome")
+# plt.gca().set_title("True and predicted diabetes progress")
+# plt.show()
 
 # -------------------------------------------------------------
 
